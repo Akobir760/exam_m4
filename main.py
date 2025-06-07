@@ -1,4 +1,5 @@
 from app.table_execute import executes
+from app.auth  import Register, logout, read
 
 
 
@@ -11,7 +12,7 @@ def Auth():
     choice = input("Enter your choice number: ")
     
     if choice == '1':
-        pass
+        Register()
     elif choice == '2':
         pass
     elif choice == '3':
@@ -44,6 +45,7 @@ def Admin_menu():
         pass
     elif choice == '7':
         print("Good bye! \n Exiting...")
+        logout()
         return Auth()
 
     
@@ -67,10 +69,12 @@ def user_menu():
         pass
     elif choice == '5':
         print("Good bye! \n Exiting...")
+        logout()
         return Auth()
 
     
 
 if __name__ == "__main__":
     executes()
+    logout()
     Auth()
