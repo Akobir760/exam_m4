@@ -1,3 +1,7 @@
+from app.table_execute import executes
+
+
+
 def Auth():
     print("""
 1. Register
@@ -68,4 +72,5 @@ def user_menu():
     
 
 if __name__ == "__main__":
+    executes()
     Auth()

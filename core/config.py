@@ -14,11 +14,11 @@ DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 
 DB_CONFIG = {
-    "database": DB_NAME,
-    "user": DB_USER,
-    "port": DB_PORT,
-    "host": DB_HOST,
-    "password": DB_PASS
+    "database": 'm4_exam',
+    "user": 'm4_exam',
+    "port": 5432,
+    "host": 'localhost',
+    "password": 'm4_exam'
 }
 def get_connection():
     return psycopg2.connect(**DB_CONFIG)
