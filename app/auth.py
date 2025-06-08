@@ -6,7 +6,6 @@ from core.db_settings import execute_query
 import random
 
 
-
 def email_sender(r_email, m_body):
     sender_email = "sanjarbekwork@gmail.com"
     receiver_email = r_email
@@ -32,13 +31,19 @@ def email_sender(r_email, m_body):
         print(f"Failed to send email. Error: {e}")
 
 
-
-
-
 def  Register():
     try:
         full_name = input("Enter your full name: ")
         email = input("Enter your email: ")
+
+        email_query = "SELECT email FROM users;"
+        e_list = execute_query(query=email_query, fetch="all")
+        
+        for list in e_list:
+            if list[0] == email:
+                print("This email already exists!")
+                return
+
         code = random.randint(1000, 9999)
 
         message = f"Sizning tasdiqlash kodingiz: {code}!"
@@ -58,13 +63,32 @@ def  Register():
     except BaseException as e:
         print(e)    
 
+
+
+
 def logout():
     logout_query = "UPDATE  users SET is_login = FALSE;"
 
     execute_query(query=logout_query)
 
 
+admin_email = "admin@gmail.com"
 
 
 
+def login():
+    email = input("Enter your email: ")
+
+    if email == admin_email:
+        return "admin"
+    
+    email_query = "SELECT email FROM users;"
+    e_list = execute_query(query=email_query, fetch="all")
+    
+    for list in e_list:
+        if list[0] == email:
+            login_query = "UPDATE users SET is_login = TRUE WHERE email = %s;"
+            execute_query(query=login_query, params=(email,))
+            return "user"
+        
 
