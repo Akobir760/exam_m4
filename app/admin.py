@@ -137,4 +137,4 @@ def statistics():
         all_debts_number += debt_book
 
     print(f"All debts count: {all_debts_number}")
-    print('-' *15, "BOOKS   ", '-' * 15) 
+    print('-' *15, "BOOKS ", '-' * 15) 

@@ -1,6 +1,7 @@
 from app.table_execute import executes
 from app.auth  import Register, logout, login
 from app.admin import add_new_book, new_author, change_books, delete_book, show_all_users, statistics
+from app.user import show_all_books, rent_book, return_book, show_my_rents
 
 
 
@@ -85,7 +86,6 @@ def change_book():
         return Admin_menu()
     return(change_book())
 
-
 def user_menu():
     print("""
 1. Show all books
@@ -97,17 +97,18 @@ def user_menu():
     choice = input("Enter your choice number: ")
     
     if choice == '1':
-        pass
+        show_all_books()
     elif choice == '2':
-        pass
+        rent_book()
     elif choice == '3':
-        pass
+        return_book()
     elif choice == '4':
-        pass
+        show_my_rents()
     elif choice == '5':
         print("Good bye! \n Exiting...")
         logout()
         return Auth()
+    return user_menu()
 
     
 
