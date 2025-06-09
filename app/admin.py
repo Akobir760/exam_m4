@@ -15,7 +15,7 @@ def add_new_book():
                 print("This book is exists!")
                 return
 
-        published = input("Enter book's published date: ")
+        published = input("Enter book's published date(YYYY-MM-DD): ")
         count = input("Enter book's total count: ")
 
         add_book_query = "INSERT INTO books (title, author_id, published_at, total_count, available_count) VALUES (%s, %s, %s, %s, %s);"
@@ -47,10 +47,10 @@ def new_author():
 
 
 def change_books(choice_number):
-    books = "SELECT id, title, author_id FROM books;"
+    books = "SELECT * FROM books;"
     books_list = execute_query(query=books, fetch="all")
     for book in books_list:
-        print(f"book id: {book[0]}, title: {book[1]}, author id: {book[2]}")
+        print(f"book id: {book[0]}, title: {book[1]}, author id: {book[2]}, published date: {book[3]}, total count: {book[4]}, available count: {book[5]}")
 
     book_id = int(input("Enter book's id: "))
 
@@ -136,5 +136,5 @@ def statistics():
         debt_book = book[4] - book[5]
         all_debts_number += debt_book
 
-    print(f"All debts count: {all_debts_number}")
+    print(f"All rents count: {all_debts_number}")
     print('-' *15, "BOOKS ", '-' * 15) 

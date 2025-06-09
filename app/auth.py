@@ -4,6 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from core.db_settings import execute_query
 import random
+import threading
 
 
 def email_sender(r_email, m_body):
@@ -47,7 +48,7 @@ def  Register():
         code = random.randint(1000, 9999)
 
         message = f"Sizning tasdiqlash kodingiz: {code}!"
-        email_sender(r_email=email, m_body=message )
+        threading.Thread(target=email_sender, args=(email, message)).start()
         in_code = input("Enter register code (we send it to your email): ")
         
         while int(code) != int(in_code):
@@ -56,7 +57,7 @@ def  Register():
 
         register_query = "INSERT INTO users (full_name, email, is_login) VALUES (%s, %s, %s);"
 
-        execute_query(query=register_query, params=(full_name, email, True))
+        execute_query(query=register_query, params=(full_name, email, False))
         print("Register successfully")
         
     
