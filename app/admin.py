@@ -5,23 +5,36 @@ from core.db_settings import execute_query
 def add_new_book():
     try:
         b_title = input("Enter book title: ")
+        author_id_query = "SELECT * FROM authors;"
+        a_id_list = execute_query(query=author_id_query, fetch="all")
+
+        for a in a_id_list:
+            print(f"id: {a[0]}, name: {a[1]}")
+
         author_id = int(input("Enter author's id: "))
 
-        check_query = "SELECT title, author_id FROM books;"
-        books_list = execute_query(query=check_query, fetch="all")
 
-        for book in books_list:
-            if book[0] == b_title and book[1] == author_id:
-                print("This book is exists!")
+        for id in a_id_list:
+            if id[0] == author_id:
+                check_query = "SELECT title, author_id FROM books;"
+                books_list = execute_query(query=check_query, fetch="all")
+
+                for book in books_list:
+                    if book[0] == b_title and book[1] == author_id:
+                        print("This book is exists!")
+                        return
+
+                published = input("Enter book's published date(YYYY-MM-DD): ")
+                count = input("Enter book's total count: ")
+
+                add_book_query = "INSERT INTO books (title, author_id, published_at, total_count, available_count) VALUES (%s, %s, %s, %s, %s);"
+                execute_query(query=add_book_query, params=(b_title,author_id, published, count, count ))
+                print("New book added!")
                 return
-
-        published = input("Enter book's published date(YYYY-MM-DD): ")
-        count = input("Enter book's total count: ")
-
-        add_book_query = "INSERT INTO books (title, author_id, published_at, total_count, available_count) VALUES (%s, %s, %s, %s, %s);"
-        execute_query(query=add_book_query, params=(b_title,author_id, published, count, count ))
-        print("New book added!")
-    
+        
+        else:
+            print("Author can not find!")
+        
     except BaseException as e:
         print(e)
 
