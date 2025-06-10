@@ -78,18 +78,21 @@ admin_email = "admin@gmail.com"
 
 
 def login():
-    email = input("Enter your email: ")
+    try:
+        email = input("Enter your email: ")
 
-    if email == admin_email:
-        return "admin"
+        if email == admin_email:
+            return "admin"
+        
+        email_query = "SELECT email FROM users;"
+        e_list = execute_query(query=email_query, fetch="all")
+        for list in e_list:
+            if list[0] == email:
+                login_query = "UPDATE users SET is_login = TRUE WHERE email = %s;"
+                execute_query(query=login_query, params=(email,))
+                return "user"
     
-    email_query = "SELECT email FROM users;"
-    e_list = execute_query(query=email_query, fetch="all")
-    
-    for list in e_list:
-        if list[0] == email:
-            login_query = "UPDATE users SET is_login = TRUE WHERE email = %s;"
-            execute_query(query=login_query, params=(email,))
-            return "user"
+    except BaseException as e:
+        print(e)
         
 
